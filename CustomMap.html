@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<div class="frame">
+	<div id="map"></div>
+	<div id="border">
+		<div id="square">
+		<div id="background"></div>
+		<div id="txt"></div>
+		<div id="txt2"></div>
+	</div>
+		<img src="https://upload.wikimedia.org/wikipedia/commons/9/97/Wsp_red.png" style ="width:140px">
+	</div>
+</div>
+	<!-- Replace the value of the key parameter with your own API key EVERY TIME map features/parameters are modified -->
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDlrIxZMXx1nmY51hkcxDgm58f400pdSRI&callback=initMap">
+	</script>
+
+<!-- Call functions onload Source: https://stackoverflow.com/questions/3910736/how-to-call-multiple-javascript-functions-in-onclick-event-->
+<body onload="startTime();startTime2()">
+	<style>
+		/* Always set the map height explicitly to define the size of the div
+	 	* element that contains the map. */
+		#map {
+ 		height: 2000px;
+		width: 1820px;
+		}
+		/* Optional: Makes the sample page fill the window. */
+		html, body {
+ 		height: 100%;
+  		margin: 0;
+  		padding: 0;
+		}
+
+	/* https://stackoverflow.com/questions/27690404/css-create-one-box-inside-another*/
+	/*https://www.w3schools.com/css/css_positioning.asp*/
+	#border {
+		position: absolute;
+  		height: 1960px;
+  		width: 1800px;
+  		border: 10px solid #000000;
+  		top: 0px;
+  		left: 0px;
+		}
+
+	#square {
+  		position: absolute;
+  		width: 305px;
+ 		height: 140px;
+		border: 3px solid #000000;		
+  		top: 20px;
+  		left: 20px;
+		}
+
+	#square #txt {
+  		position: relative;
+  		margin-top: 2%;
+  		text-align: center;
+  		font-family: 'Arial';font-size: 44px;
+  		}
+
+	#square #txt2 {
+  		position: relative;
+  		/*https://www.w3schools.com/css/css_positioning.asp*/
+  		/*margin: auto;*/
+  		margin-top: 1%;
+		right: -3px;
+  		/*text-align: center;*/
+  		font-family: 'Arial';
+  		font-size: 70px;
+		z-index: +1;
+  		}
+	#square #background {
+  		position: absolute;
+  		width: 100%;
+ 		height: 100%;
+		opacity: 0.8;
+		background-color: #ffffff;		
+		}  
+  	#border img{
+  		/*https://www.w3schools.com/css/css3_images.asp*/
+    		position: absolute;
+    		bottom: 5px;
+		right: 10px;
+     		}
+  	</style>
+		
+
+	<script>
+
+	function initMap() {
+		//
+	// Customize map location and zoom level at start-up
+		//
+		var map = new google.maps.Map(document.getElementById('map'), {
+    		zoom: 14,
+		center: {lat: 43.337073, lng: -79.831323},	disableDefaultUI: true,
+		//
+	// Customize map style; tool for doing so here: https://mapstyle.withgoogle.com/
+		//
+		styles: [
+		{
+		featureType: 'poi',elementType:'all',
+		stylers: [{visibility: 'off'}]
+		},
+		{
+		featureType: 'landscape',
+		elementType: 'all',
+		stylers: [{'hue': '#f7f7f7'},{'saturation':-100},{'lightness':30},{'visibility':'simplified'}]
+		},
+    
+		{
+		featureType: 'administrative',
+		elementType:'all',
+		stylers:[{'hue':'#bbc0c4'},{'saturation':-93},{'lightness':50},{'visibility':'on'}]
+		},
+ 
+		{
+		featureType: 'road',
+		elementType:'geometry',
+		stylers:[{'hue':'#bbc0c4'},{'saturation':-93},{'lightness':31},{'visibility':'simplified'}]
+		},
+
+		{
+		featureType:'road',
+		elementType:'labels',
+		stylers:[{'hue':'#bbc0c4'},{'saturation':-93},{'lightness':31},{'visibility':'on'}]
+		},   
+
+		{
+		featureType:'road.arterial',
+		elementType:'labels',
+		stylers:[{'hue':'#bbc0c4'},{'saturation':-93},{'lightness':-2},{'visibility':'simplified'}]
+		},   
+
+		{featureType:'road.local',
+		elementType:'geometry',
+		stylers:[{'hue':'#e9ebed'},{'saturation':-90},{'lightness':-8},{'visibility':'simplified'}]
+		},
+
+		{
+		featureType:'water',
+		elementType:'all',
+		stylers:[{'hue':'#e9ebed'},{'saturation':-78},{'lightness':30},{'visibility':'simplified'}]
+		},
+
+		{
+		featureType: 'transit',
+		elementType:'labels.icon',
+		stylers: [{'hue':'#bbc0c4'},{'saturation':0},{'lightness':67},{'visibility': 'off'}]
+		}
+		]
+		});
+
+	//Activate Traffic Layer
+		//
+		var trafficLayer = new google.maps.TrafficLayer();
+		trafficLayer.setMap(map);
+
+		}
+	</script>
+
+	<script>
+		var objToday = new Date();
+    		//source for date overlay code:
+		//https://stackoverflow.com/questions/1531093/how-do-i-get-the-current-date-in-javascript
+
+		function startTime() {
+    
+   			//var objToday = new Date(),
+			var weekday = new Array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'),
+    			dayOfWeek = weekday[objToday.getDay()],
+    			domEnder = function() { var a = objToday; if (/1/.test(parseInt((a + "").charAt(0)))) return "th"; a = parseInt((a + "").charAt(1)); return 1 == a ? "st" : 2 == a ? "nd" : 3 == a ? "rd" : "th" }
+
+(),
+    			dayOfMonth = today + ( objToday.getDate() < 10) ? '0' + objToday.getDate() + domEnder : objToday.getDate() + domEnder,
+			months = new Array('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'),
+  			curMonth = months[objToday.getMonth()],
+    			curYear = objToday.getFullYear();
+			var today = dayOfWeek + " " + curMonth + " " + dayOfMonth; //+ curHour + ":" + curMinute + " " + curMeridiem //+ ", " + curYear;
+			document.getElementById('txt').innerHTML = today;
+		}
+
+		function startTime2() {
+			//var objToday = new Date(),
+			var curHour = objToday.getHours() > 12 ? objToday.getHours() - 12 : (objToday.getHours() < 10 ? "0" + objToday.getHours() : objToday.getHours()),
+    			curMinute = objToday.getMinutes() < 10 ? "0" + objToday.getMinutes() : objToday.getMinutes(),
+    			curSeconds = objToday.getSeconds() < 10 ? "0" + objToday.getSeconds() : objToday.getSeconds(),
+    			curMeridiem = objToday.getHours() > 12 ? "PM" : "AM";
+  			var today2 = curHour + ":" + curMinute + " " +	curMeridiem; //+ ", " + curYear;
+			document.getElementById('txt2').innerHTML = today2;
+		}
+	</script>
+</html>
